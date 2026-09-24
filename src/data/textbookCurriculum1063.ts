@@ -9,7 +9,7 @@ import { TextbookExercise } from '../types/textbook';
  * 2. "пез нияких пітказок тої приклат якиї в книшкі тої пиши" (NO hints in question prompts; exact textbook task commands)
  * 3. Exact matching of real textbook topics for every number range.
  */
-export function generateCurriculumExercise(
+function generateCurriculumExercisesRaw(
   num: number,
   topicId: string,
   chapterId: string
@@ -656,4 +656,66 @@ export function generateCurriculumExercise(
 
 function mod4(n: number): number {
   return n % 4;
+}
+
+/**
+ * USER REQUIREMENT:
+ * "ЗРОБИ ТАМДЕ НЕМАЄ ПРИКЛАДІВ ГОТИВИХ КНИГОЮ НЕПИШИ І ЩОП БУВ 1 ПРИКЛАТ"
+ * 
+ * Там, де немає готових прикладів із підручника:
+ * 1. "книгою не пиши" -> Не писати в умові/поясненні "за підручником", "з книги"
+ * 2. "і щоб був 1 приклад" -> Рівно 1 приклад на цей номер (замість 4..6 підпунктів)
+ * 3. Номер позначається просто "№ X" без дужок "(1)"
+ */
+export function generateCurriculumExercise(
+  num: number,
+  topicId: string,
+  chapterId: string
+): TextbookExercise[] {
+  const rawList = generateCurriculumExercisesRaw(num, topicId, chapterId);
+  const primary = rawList[0];
+  if (!primary) return [];
+
+  const cleanExplanation = (primary.explanation || '')
+    .replace(/згідно з матеріалами підручника\.?/gi, 'За правилами алгебри.')
+    .replace(/за підручником\.?/gi, '')
+    .trim();
+
+  if (primary.type === 'choice') {
+    const cleanPrompt = (primary.questionPrompt || '')
+      .replace(/за підручником.*?:/gi, ':')
+      .replace(/з підручника:?/gi, '')
+      .replace(/за підручником/gi, '')
+      .replace(/за матеріалами підручника/gi, '')
+      .trim();
+
+    return [{
+      ...primary,
+      id: `${topicId}-num-${num}`,
+      exerciseNumber: `№ ${num}`,
+      baseNumber: num,
+      partNumber: 1,
+      isAuthenticBook: false,
+      questionPrompt: cleanPrompt,
+      explanation: cleanExplanation
+    }];
+  } else {
+    const cleanTitle = (primary.title || '')
+      .replace(/за підручником.*?:/gi, ':')
+      .replace(/з підручника:?/gi, '')
+      .replace(/за підручником/gi, '')
+      .replace(/за матеріалами підручника/gi, '')
+      .trim();
+
+    return [{
+      ...primary,
+      id: `${topicId}-num-${num}`,
+      exerciseNumber: `№ ${num}`,
+      baseNumber: num,
+      partNumber: 1,
+      isAuthenticBook: false,
+      title: cleanTitle,
+      explanation: cleanExplanation
+    }];
+  }
 }

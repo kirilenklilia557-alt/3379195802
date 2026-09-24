@@ -125,7 +125,7 @@ export const TopicNumbersTableModal: React.FC<TopicNumbersTableModalProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-mono font-bold uppercase text-blue-200 tracking-wider">
-                  Таблиця номерів теми {chapterNumber}
+                  Таблиця номерів підручника
                 </span>
                 <span className="px-2 py-0.5 rounded-md bg-[#2563eb] text-white text-[11px] font-mono font-black">
                   {groupedNumbers.length} номерів
@@ -189,8 +189,14 @@ export const TopicNumbersTableModal: React.FC<TopicNumbersTableModalProps> = ({
                   <button
                     key={grp.baseNumber}
                     onClick={() => {
-                      sounds.playClick();
-                      setSelectedBaseNumber(grp.baseNumber);
+                      if (grp.items.length === 1) {
+                        sounds.playStart();
+                        onSelectExercise(grp.items[0].id);
+                        onClose();
+                      } else {
+                        sounds.playClick();
+                        setSelectedBaseNumber(grp.baseNumber);
+                      }
                     }}
                     className={`p-3 rounded-2xl border-2 flex flex-col items-center justify-center gap-1 cursor-pointer transition-all duration-150 relative ${
                       isSelected
@@ -205,18 +211,13 @@ export const TopicNumbersTableModal: React.FC<TopicNumbersTableModalProps> = ({
                     </span>
 
                     <span
-                      className={`text-[10px] font-mono font-bold px-1.5 py-0.2 rounded-md ${
+                      className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md ${
                         isSelected
                           ? 'bg-black/40 text-white'
                           : 'bg-black/30 text-zinc-300'
                       }`}
                     >
-                      {grp.items.length}{' '}
-                      {grp.items.length === 1
-                        ? 'пр.'
-                        : grp.items.length < 5
-                        ? 'пр.'
-                        : 'пр.'}
+                      {grp.items.length === 1 ? '1 приклад' : `${grp.items.length} пр.`}
                     </span>
 
                     {isCurrentInWorkspace && !isSelected && (

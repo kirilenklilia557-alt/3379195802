@@ -2,6 +2,7 @@ import { TextbookExercise, ChoiceOption } from '../types/textbook';
 import { CHAPTERS } from './chaptersData';
 import { getTextbookExercisesByBookId, SUPPORTED_TEXTBOOKS, TextbookInfo } from './textbooksData';
 import { AUTHENTIC_TOPIC_2_2_EXERCISES } from './authenticExercises';
+import { generateCurriculumExercise } from './textbookCurriculum1063';
 
 export { SUPPORTED_TEXTBOOKS };
 export type { TextbookInfo };
@@ -809,7 +810,7 @@ export const TEXTBOOK_EXERCISES: TextbookExercise[] = [
   },
   {
     id: 'ex-1-1-35-2',
-    topicId: 't-1-1',
+    topicId: 't-1-2',
     chapterId: 'ch-1',
     exerciseNumber: '№ 35 (2)',
     baseNumber: 35,
@@ -829,7 +830,7 @@ export const TEXTBOOK_EXERCISES: TextbookExercise[] = [
   },
   {
     id: 'ex-1-1-35-3',
-    topicId: 't-1-1',
+    topicId: 't-1-2',
     chapterId: 'ch-1',
     exerciseNumber: '№ 35 (3)',
     baseNumber: 35,
@@ -849,7 +850,7 @@ export const TEXTBOOK_EXERCISES: TextbookExercise[] = [
   },
   {
     id: 'ex-1-1-35-4',
-    topicId: 't-1-1',
+    topicId: 't-1-2',
     chapterId: 'ch-1',
     exerciseNumber: '№ 35 (4)',
     baseNumber: 35,
@@ -869,7 +870,7 @@ export const TEXTBOOK_EXERCISES: TextbookExercise[] = [
   },
   {
     id: 'ex-1-1-35-5',
-    topicId: 't-1-1',
+    topicId: 't-1-2',
     chapterId: 'ch-1',
     exerciseNumber: '№ 35 (5)',
     baseNumber: 35,
@@ -889,7 +890,7 @@ export const TEXTBOOK_EXERCISES: TextbookExercise[] = [
   },
   {
     id: 'ex-1-1-35-6',
-    topicId: 't-1-1',
+    topicId: 't-1-2',
     chapterId: 'ch-1',
     exerciseNumber: '№ 35 (6)',
     baseNumber: 35,
@@ -1282,9 +1283,9 @@ export const TEXTBOOK_EXERCISES: TextbookExercise[] = [
 ];
 
 /**
- * Повертає виключно автентичні завдання з підручника для обраної теми.
- * Жодних штучно додуманих чи вигаданих номерів/прикладів.
- * Номери, де немає прикладів, не відображаються — залишаються лише ті, що є в підручнику та у відповідях в кінці!
+ * Повертає повний набір номерів підручника для обраної теми.
+ * Включає всі номери згідно з програмою теми підручника (1..1065) з усіма підприкладами (1..4 або 1..6).
+ * Автентичні завдання з підручника мають найвищий пріоритет.
  */
 export function getExercisesForTopic(
   topicId: string, 
@@ -1295,35 +1296,68 @@ export function getExercisesForTopic(
   const safeBookId = (bookId === 'tarasenkova' || bookId === 'ister' || bookId === 'merzlyak') ? bookId : 'tarasenkova';
   const bookExercises = getTextbookExercisesByBookId(safeBookId);
 
-  // Збираємо автентичні завдання з підручника
+  // 1. Автентичні та готові завдання з обраного підручника
   const fromBook = bookExercises.filter(ex => ex.topicId === topicId);
   const curated = TEXTBOOK_EXERCISES.filter(ex => ex.topicId === topicId);
 
-  const exerciseMap = new Map<string, TextbookExercise>();
+  // Групуємо готові завдання з книги за базовим номером
+  const readyExercisesByBaseNum = new Map<number, TextbookExercise[]>();
 
   curated.forEach((c) => {
-    const key = `${c.baseNumber}-${c.partNumber || 1}`;
-    exerciseMap.set(key, {
+    const bNum = c.baseNumber || 0;
+    if (!readyExercisesByBaseNum.has(bNum)) {
+      readyExercisesByBaseNum.set(bNum, []);
+    }
+    readyExercisesByBaseNum.get(bNum)!.push({
       ...c,
       chapterId: chId,
+      isAuthenticBook: true
     });
   });
 
   fromBook.forEach((b) => {
-    const key = `${b.baseNumber}-${b.partNumber || 1}`;
-    exerciseMap.set(key, {
+    const bNum = b.baseNumber || 0;
+    const existing = readyExercisesByBaseNum.get(bNum);
+    if (!existing || existing.some(e => e.id.startsWith('ex-'))) {
+      readyExercisesByBaseNum.set(bNum, []);
+    }
+    readyExercisesByBaseNum.get(bNum)!.push({
       ...b,
       chapterId: chId,
+      isAuthenticBook: true
     });
   });
 
-  const allExercises = Array.from(exerciseMap.values()).sort((a, b) => {
-    if (a.baseNumber !== b.baseNumber) return a.baseNumber - b.baseNumber;
+  const finalExercises: TextbookExercise[] = [];
+
+  // 2. Проходимо всі номери програми теми від fromNumber до toNumber
+  const range = TOPIC_EXERCISE_RANGES[topicId];
+  if (range) {
+    for (let n = range.fromNumber; n <= range.toNumber; n++) {
+      const readyList = readyExercisesByBaseNum.get(n);
+      if (readyList && readyList.length > 0) {
+        // Є готові приклади з підручника: беремо тільки готові завдання
+        finalExercises.push(...readyList);
+      } else {
+        // ВИМОГА: "ТАМ ДЕ НЕМАЄ ПРИКЛАДІВ ГОТОВИХ КНИГОЮ НЕ ПИШИ І ЩОБ БУВ 1 ПРИКЛАД"
+        // Рівно 1 приклад на цей номер, без згадок "підручник" / "книга", номер просто "№ n"
+        const generated = generateCurriculumExercise(n, topicId, chId);
+        finalExercises.push(...generated);
+      }
+    }
+  } else {
+    readyExercisesByBaseNum.forEach(list => finalExercises.push(...list));
+  }
+
+  const sortedExercises = finalExercises.sort((a, b) => {
+    const baseA = a.baseNumber ?? 0;
+    const baseB = b.baseNumber ?? 0;
+    if (baseA !== baseB) return baseA - baseB;
     return (a.partNumber || 1) - (b.partNumber || 1);
   });
 
   // Перемішуємо варіанти відповідей детерміновано, щоб правильна відповідь не завжди була першою
-  return allExercises.map((ex) => {
+  return sortedExercises.map((ex) => {
     if (ex.type === 'choice' && ex.options && ex.options.length > 0) {
       return {
         ...ex,
@@ -1341,32 +1375,45 @@ export interface TopicExerciseRange {
 }
 
 export const TOPIC_EXERCISE_RANGES: Record<string, TopicExerciseRange> = {
-  // Розділ 1: Повторення та систематизація (7 клас) (с. 5-12)
-  't-1-1': { fromNumber: 1, toNumber: 24, label: 'від № 1 по № 24' },
-  't-1-2': { fromNumber: 25, toNumber: 49, label: 'від № 25 по № 49' },
+  // Розділ 1: Узагальнення та систематизація (7 клас) (с. 5-12)
+  't-1-1': { fromNumber: 1, toNumber: 12, label: 'від № 1 по № 12' },
+  't-1-2': { fromNumber: 13, toNumber: 24, label: 'від № 13 по № 24' },
+  't-1-3': { fromNumber: 25, toNumber: 36, label: 'від № 25 по № 36' },
+  't-1-4': { fromNumber: 37, toNumber: 49, label: 'від № 37 по № 49' },
 
   // Розділ 2: Раціональні вирази (с. 13-134)
   't-2-1': { fromNumber: 50, toNumber: 84, label: 'від № 50 по № 84' },
-  't-2-2': { fromNumber: 89, toNumber: 113, label: 'від № 89 по № 113' },
-  't-2-3': { fromNumber: 114, toNumber: 180, label: 'від № 114 по № 180' },
-  't-2-5': { fromNumber: 181, toNumber: 264, label: 'від № 181 по № 264' },
-  't-2-8': { fromNumber: 265, toNumber: 418, label: 'від № 265 по № 418' },
+  't-2-2': { fromNumber: 85, toNumber: 113, label: 'від № 85 по № 113' },
+  't-2-3': { fromNumber: 114, toNumber: 134, label: 'від № 114 по № 134' },
+  't-2-4': { fromNumber: 135, toNumber: 180, label: 'від № 135 по № 180' },
+  't-2-5': { fromNumber: 181, toNumber: 210, label: 'від № 181 по № 210' },
+  't-2-6': { fromNumber: 211, toNumber: 234, label: 'від № 211 по № 234' },
+  't-2-7': { fromNumber: 235, toNumber: 264, label: 'від № 235 по № 264' },
+  't-2-8': { fromNumber: 265, toNumber: 308, label: 'від № 265 по № 308' },
+  't-2-9': { fromNumber: 309, toNumber: 368, label: 'від № 309 по № 368' },
+  't-2-10': { fromNumber: 369, toNumber: 418, label: 'від № 369 по № 418' },
   't-2-11': { fromNumber: 419, toNumber: 467, label: 'від № 419 по № 467' },
 
   // Розділ 3: Квадратні корені. Дійсні числа (с. 135-208)
   't-3-1': { fromNumber: 468, toNumber: 497, label: 'від № 468 по № 497' },
-  't-3-2': { fromNumber: 498, toNumber: 614, label: 'від № 498 по № 614' },
-  't-3-5': { fromNumber: 615, toNumber: 715, label: 'від № 615 по № 715' },
+  't-3-2': { fromNumber: 498, toNumber: 577, label: 'від № 498 по № 577' },
+  't-3-3': { fromNumber: 578, toNumber: 614, label: 'від № 578 по № 614' },
+  't-3-4': { fromNumber: 615, toNumber: 684, label: 'від № 615 по № 684' },
+  't-3-5': { fromNumber: 685, toNumber: 715, label: 'від № 685 по № 715' },
 
   // Розділ 4: Квадратні рівняння (с. 209-275)
-  't-4-1': { fromNumber: 716, toNumber: 774, label: 'від № 716 по № 774' },
-  't-4-2': { fromNumber: 775, toNumber: 806, label: 'від № 775 по № 806' },
-  't-4-3': { fromNumber: 807, toNumber: 927, label: 'від № 807 по № 927' },
+  't-4-1': { fromNumber: 716, toNumber: 742, label: 'від № 716 по № 742' },
+  't-4-2': { fromNumber: 743, toNumber: 774, label: 'від № 743 по № 774' },
+  't-4-3': { fromNumber: 775, toNumber: 806, label: 'від № 775 по № 806' },
+  't-4-4': { fromNumber: 807, toNumber: 830, label: 'від № 807 по № 830' },
+  't-4-5': { fromNumber: 831, toNumber: 865, label: 'від № 831 по № 865' },
+  't-4-6': { fromNumber: 866, toNumber: 927, label: 'від № 866 по № 927' },
 
   // Розділ 5: Елементи стохастики (с. 276-315)
   't-5-1': { fromNumber: 928, toNumber: 969, label: 'від № 928 по № 969' },
   't-5-2': { fromNumber: 970, toNumber: 997, label: 'від № 970 по № 997' },
-  't-5-3': { fromNumber: 998, toNumber: 1065, label: 'від № 998 по № 1065' }
+  't-5-3': { fromNumber: 998, toNumber: 1035, label: 'від № 998 по № 1035' },
+  't-5-4': { fromNumber: 1036, toNumber: 1065, label: 'від № 1036 по № 1065' }
 };
 
 export interface TopicLookupResult {

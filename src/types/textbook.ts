@@ -23,6 +23,7 @@ export interface ChoiceExercise {
   options: ChoiceOption[];
   explanation: string;
   essence?: string;
+  isAuthenticBook?: boolean;
 }
 
 export interface StepByStepStage {
@@ -51,6 +52,7 @@ export interface StepByStepExercise {
   stages: StepByStepStage[];
   finalAnswer: string;
   explanation: string;
+  isAuthenticBook?: boolean;
 }
 
 export type TextbookExercise = ChoiceExercise | StepByStepExercise;

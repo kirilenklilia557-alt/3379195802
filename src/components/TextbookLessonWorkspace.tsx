@@ -64,7 +64,7 @@ interface TextbookLessonWorkspaceProps {
 export const TextbookLessonWorkspace: React.FC<TextbookLessonWorkspaceProps> = ({
   selectedChapterId,
   selectedTopicId,
-  selectedBookId = 'merzlyak',
+  selectedBookId = 'tarasenkova',
   onSelectBookId,
   initialExerciseId,
   onSelectTopic,
@@ -213,7 +213,7 @@ export const TextbookLessonWorkspace: React.FC<TextbookLessonWorkspaceProps> = (
   const effectiveExercise = useMemo(() => {
     if (!currentExercise) return null;
     let rawOptions = currentExercise.type === 'choice' ? currentExercise.options : undefined;
-    const rawPrompt = (currentExercise as any).questionPrompt || (currentExercise as any).title || 'Оберіть правильну відповідь за підручником:';
+    const rawPrompt = (currentExercise as any).questionPrompt || (currentExercise as any).title || 'Оберіть правильну відповідь:';
 
     if (!rawOptions || rawOptions.length === 0) {
       const fallbackAns = (currentExercise as any).finalAnswer || 'Правильна відповідь';
@@ -233,7 +233,7 @@ export const TextbookLessonWorkspace: React.FC<TextbookLessonWorkspaceProps> = (
       type: 'choice' as const,
       questionPrompt: rawPrompt,
       options: randomized,
-      explanation: currentExercise.explanation || 'Розв\'язання згідно з матеріалами підручника.'
+      explanation: currentExercise.explanation || 'Покрокове математичне пояснення.'
     };
   }, [currentExercise]);
 
@@ -419,30 +419,6 @@ export const TextbookLessonWorkspace: React.FC<TextbookLessonWorkspaceProps> = (
               <ArrowLeft className="w-4 h-4 text-white" />
               <span className="text-white">До вибору теми</span>
             </button>
-
-            {/* Textbook Switcher & "З книжки" Buttons */}
-            <div className="hidden sm:flex items-center gap-2">
-              <button
-                onClick={() => setIsCustomBookModalOpen(true)}
-                className="flex px-3.5 py-2 rounded-2xl bg-blue-950/60 hover:bg-blue-900 border-2 border-blue-500/60 text-white text-xs font-bold items-center gap-2 shadow-[0_4px_0_#0f172a] active:translate-y-0.5 transition-all cursor-pointer"
-                title="Натисніть, щоб обрати інший підручник (Мерзляк, Тарасенкова, Істер)"
-              >
-                <span>{currentBook.icon}</span>
-                <span className="text-white font-bold">{currentBook.name}</span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-blue-500/30 text-blue-200 border border-blue-400/30">
-                  Змінити ▾
-                </span>
-              </button>
-
-              <button
-                onClick={() => setIsCustomBookModalOpen(true)}
-                className="flex px-3 py-2 rounded-2xl bg-emerald-950/70 hover:bg-emerald-900 border-2 border-emerald-500/70 text-emerald-200 text-xs font-bold items-center gap-1.5 shadow-[0_4px_0_#0f172a] active:translate-y-0.5 transition-all cursor-pointer"
-                title="Ввести номер і приклад прямо зі своєї книжки"
-              >
-                <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="hidden md:inline">З моєї книги</span>
-              </button>
-            </div>
           </div>
 
           {/* CENTER: 3D RED EXERCISE NUMBER BUTTON ("при натисканю на номер вилаза таблиця з номерами по ці темі") */}
@@ -519,10 +495,10 @@ export const TextbookLessonWorkspace: React.FC<TextbookLessonWorkspaceProps> = (
         {/* SUBTITLE WITH TOPIC AND RANGE (CENTERED) */}
         <div className="w-full max-w-5xl mx-auto flex items-center justify-center pt-1">
           <div className="text-xs sm:text-sm text-white font-mono flex flex-wrap items-center justify-center gap-2">
-            <span className="text-emerald-400 font-bold">{currentChapter.number}. {currentTopic.title}</span>
+            <span className="text-emerald-400 font-bold">{currentTopic.title}</span>
             <span className="text-zinc-500 hidden sm:inline">•</span>
             <span className="px-3 py-0.5 rounded-full bg-[#1e293b] border border-[#475569] text-white font-bold">
-              {topicRange.label} ({topicExercises.length} завдань)
+              {topicRange.label} ({topicExercises.length} прикладів)
             </span>
           </div>
         </div>
@@ -579,7 +555,7 @@ export const TextbookLessonWorkspace: React.FC<TextbookLessonWorkspaceProps> = (
           <div className="w-full max-w-5xl mx-auto p-6 sm:p-8 rounded-3xl bg-[#1e293b] border-4 border-[#3b82f6] shadow-[0_12px_0_#0f172a] space-y-3 animate-in fade-in">
             <div className="flex items-center gap-2 text-white text-sm font-bold uppercase tracking-wider font-mono">
               <FileText className="w-5 h-5 text-blue-400" />
-              <span className="text-white font-black">Умова задачі підручника:</span>
+              <span className="text-white font-black">Умова задачі:</span>
             </div>
             <p className="text-lg sm:text-2xl font-bold font-mono text-white leading-relaxed">
               {currentExercise.taskText}
@@ -702,7 +678,7 @@ export const TextbookLessonWorkspace: React.FC<TextbookLessonWorkspaceProps> = (
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <span className="text-sm font-mono font-bold text-white uppercase tracking-wide flex items-center gap-2">
                     <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                    <span className="text-white font-bold">Пояснення розв'язання за підручником:</span>
+                    <span className="text-white font-bold">Пояснення розв'язання:</span>
                   </span>
 
                   <button

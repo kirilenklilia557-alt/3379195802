@@ -11,13 +11,14 @@ export default function App() {
   // App Phase: 'start' (3D emerald start button) -> 'topic-wheel' (cylindrical 3D book topic wheel) -> 'lesson' (textbook tasks)
   const [screenMode, setScreenMode] = useState<'start' | 'topic-wheel' | 'lesson'>('start');
 
-  // Selected School Textbook: 'tarasenkova' (default, matches user textbook) | 'merzlyak' | 'ister'
+  // Selected School Textbook: 'tarasenkova' (default authentic NUSH curriculum) | 'merzlyak' | 'ister'
   const [selectedBookId, setSelectedBookId] = useState<'merzlyak' | 'tarasenkova' | 'ister'>(() => {
     try {
       const saved = localStorage.getItem('algebra8_selected_textbook');
-      if (saved === 'tarasenkova' || saved === 'ister' || saved === 'merzlyak') {
+      if (saved === 'tarasenkova' || saved === 'ister') {
         return saved;
       }
+      localStorage.setItem('algebra8_selected_textbook', 'tarasenkova');
     } catch {
       // ignore
     }

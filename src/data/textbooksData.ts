@@ -1,4 +1,14 @@
 import { TextbookExercise } from '../types/textbook';
+import { TARASENKOVA_1_TO_49 } from './tarasenkova1to49';
+import { TARASENKOVA_1_TO_49_ADDITIONS } from './tarasenkova1to49Additions';
+import { TARASENKOVA_50_TO_88 } from './tarasenkova50to88';
+import { AUTHENTIC_TOPIC_2_2_EXERCISES } from './authenticExercises';
+import { TARASENKOVA_114_TO_180 } from './tarasenkova114to180';
+import { TARASENKOVA_181_TO_250 } from './tarasenkova181to250';
+import { TARASENKOVA_CHAPTER_3_TASKS } from './tarasenkovaChapter3Tasks';
+import { TARASENKOVA_CHAPTER_4_TASKS } from './tarasenkovaChapter4Tasks';
+import { TARASENKOVA_CHAPTER_5_TASKS } from './tarasenkovaChapter5Tasks';
+import { TARASENKOVA_WORD_PROBLEMS } from './tarasenkovaWordProblems';
 
 export interface TextbookInfo {
   id: 'merzlyak' | 'tarasenkova' | 'ister';
@@ -893,513 +903,16 @@ export const MERZLYAK_EXERCISES: TextbookExercise[] = [
  * Точна відповідність тексту підручника (Видавничий дім «Оріон»)
  */
 export const TARASENKOVA_EXERCISES: TextbookExercise[] = [
-  // =========================================================================
-  // РОЗДІЛ 1. Узагальнення та систематизація вивченого в 7 класі (№ 1 - № 49)
-  // =========================================================================
-
-  // --- № 1. Обчисліть найбільш раціональним способом ---
-  {
-    id: 'tarasenkova-1-1',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 1 (1)',
-    baseNumber: 1,
-    partNumber: 1,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Обчисліть найбільш раціональним способом:',
-    expression: '2,71 · 9,2 + 9,2 · 3,29',
-    options: [
-      { id: 'opt-1', label: 'А', text: '55,2', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '552', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '5,52', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '56', isCorrect: false }
-    ],
-    explanation: 'Виносимо спільний множник 9,2 за дужки:\n9,2 · (2,71 + 3,29) = 9,2 · 6,00 = 55,2.',
-    essence: 'Розподільна властивість множення: ab + ac = a(b + c).'
-  },
-  {
-    id: 'tarasenkova-1-2',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 1 (2)',
-    baseNumber: 1,
-    partNumber: 2,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Обчисліть найбільш раціональним способом:',
-    expression: '15,68 · 3,1 - 13,58 · 3,1',
-    options: [
-      { id: 'opt-1', label: 'А', text: '6,51', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '65,1', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '6,2', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '3,1', isCorrect: false }
-    ],
-    explanation: 'Виносимо спільний множник 3,1 за дужки:\n3,1 · (15,68 - 13,58) = 3,1 · 2,1 = 6,51.',
-    essence: 'Розподільна властивість віднімання: ab - ac = a(b - c).'
-  },
-  {
-    id: 'tarasenkova-1-3',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 1 (3)',
-    baseNumber: 1,
-    partNumber: 3,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Обчисліть найбільш раціональним способом:',
-    expression: '3 3/14 · 28 · 5,7',
-    options: [
-      { id: 'opt-1', label: 'А', text: '513', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '51,3', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '180', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '34,2', isCorrect: false }
-    ],
-    explanation: 'Перетворюємо мішаний дріб: 3 3/14 = 45/14.\nСкорочуємо: (45/14) · 28 = 45 · 2 = 90.\nОбчислюємо: 90 · 5,7 = 513.',
-    essence: 'Множення звичайних і десяткових дробів.'
-  },
-  {
-    id: 'tarasenkova-1-4',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 1 (4)',
-    baseNumber: 1,
-    partNumber: 4,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Обчисліть найбільш раціональним способом:',
-    expression: '5 2/7 - 2 2/5 + 3 2/7 - 11 19/35 + 2 3/5',
-    options: [
-      { id: 'opt-1', label: 'А', text: '-2 24/35', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '2 24/35', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '-3', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '0', isCorrect: false }
-    ],
-    explanation: 'Групуємо доданки:\n(5 2/7 + 3 2/7) + (-2 2/5 + 2 3/5) - 11 19/35 = 8 4/7 + 1/5 - 11 19/35 = 8 20/35 + 7/35 - 11 19/35 = 8 27/35 - 11 19/35 = -2 27/35.',
-    essence: 'Групування звичайних дробів.'
-  },
-  {
-    id: 'tarasenkova-1-5',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 1 (5)',
-    baseNumber: 1,
-    partNumber: 5,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Обчисліть найбільш раціональним способом:',
-    expression: '(2 2/3 - 1 1/4) · 24',
-    options: [
-      { id: 'opt-1', label: 'А', text: '34', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '48', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '24', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '17', isCorrect: false }
-    ],
-    explanation: 'Застосовуємо розподільну властивість множення: (8/3) · 24 - (5/4) · 24 = 8 · 8 - 5 · 6 = 64 - 30 = 34.',
-    essence: 'Розподільна дія множення на дужки.'
-  },
-  {
-    id: 'tarasenkova-1-6',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 1 (6)',
-    baseNumber: 1,
-    partNumber: 6,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Обчисліть найбільш раціональним способом:',
-    expression: '5 5/13 · 1 1/3 + 8 8/13 · 1 1/3',
-    options: [
-      { id: 'opt-1', label: 'А', text: '18 2/3', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '14', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '19', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '12 1/3', isCorrect: false }
-    ],
-    explanation: 'Виносимо 1 1/3: 1 1/3 · (5 5/13 + 8 8/13) = (4/3) · 14 = 56/3 = 18 2/3.',
-    essence: 'Винесення спільного множника.'
-  },
-
-  // --- № 2. Знайдіть значення виразу ---
-  {
-    id: 'tarasenkova-2-1',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 2 (1)',
-    baseNumber: 2,
-    partNumber: 1,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Знайдіть значення виразу:',
-    expression: '-3² + 4³ - 5⁴ + 10²',
-    options: [
-      { id: 'opt-1', label: 'А', text: '-470', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '-452', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '470', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '-500', isCorrect: false }
-    ],
-    explanation: '-3² = -9;\n4³ = 64;\n5⁴ = 625;\n10² = 100;\nРезультат: -9 + 64 - 625 + 100 = 55 - 625 + 100 = -470.',
-    essence: 'Порядок дій та обчислення степенів чисел.'
-  },
-  {
-    id: 'tarasenkova-2-2',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 2 (2)',
-    baseNumber: 2,
-    partNumber: 2,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Знайдіть значення виразу:',
-    expression: '-2⁹ - (-2)⁸ + 2⁷',
-    options: [
-      { id: 'opt-1', label: 'А', text: '-640', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '-512', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '640', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '-384', isCorrect: false }
-    ],
-    explanation: '-2⁹ = -512;\n(-2)⁸ = +256, тому -(-2)⁸ = -256;\n2⁷ = 128;\n-512 - 256 + 128 = -768 + 128 = -640.',
-    essence: 'Степінь з від\'ємною основою.'
-  },
-  {
-    id: 'tarasenkova-2-4',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 2 (4)',
-    baseNumber: 2,
-    partNumber: 4,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Знайдіть значення виразу:',
-    expression: '((-20)⁴ : ((-4)²)²) : 5²',
-    options: [
-      { id: 'opt-1', label: 'А', text: '25', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '1', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '125', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '5', isCorrect: false }
-    ],
-    explanation: '((-20)⁴ : 16²) : 25 = (160000 : 256) : 25 = 625 : 25 = 25.\nАбо: (20⁴ : 4⁴) : 5² = (20/4)⁴ : 5² = 5⁴ : 5² = 5² = 25.',
-    essence: 'Властивості степенів.'
-  },
-
-  // --- № 3. Розшифруйте прізвище автора віршованих рядків ---
-  {
-    id: 'tarasenkova-3-1',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 3',
-    baseNumber: 3,
-    partNumber: 1,
-    category: 'task',
-    type: 'choice',
-    questionPrompt: 'Розташуйте числа в порядку збільшення і розшифруйте прізвище автора рядків «Я єсть народ, якого Правди сила...»:',
-    expression: '(-0,7)³, (-6)³⁰, -7⁷, (-0,3)⁸, 1,6⁴, (-1,6)², 0²⁰²⁴, 1²⁰²³, (-0,7)⁵, 5⁴',
-    options: [
-      { id: 'opt-1', label: 'А', text: 'ТИЧИНА (Павло Тичина)', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: 'ШЕВЧЕНКО (Тарас Шевченко)', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: 'ФРАНКО (Іван Франко)', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: 'СОСЮРА (Володимир Сосюра)', isCorrect: false }
-    ],
-    explanation: 'У порядку збільшення чисел:\n1) -7⁷ (П)\n2) (-0,7)³ (А)\n3) (-0,7)⁵ (В)\n4) 0²⁰²⁴ (Л)\n5) (-0,3)⁸ (О)\n...\nОтримуємо автора: Павло ТИЧИНА.',
-    essence: 'Порівняння значень числових виразів зі степенями.'
-  },
-
-  // --- № 4. Зведіть одночлен до стандартного вигляду ---
-  {
-    id: 'tarasenkova-4-1',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 4 (1)',
-    baseNumber: 4,
-    partNumber: 1,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Зведіть одночлен до стандартного вигляду та вкажіть його степінь:',
-    expression: '0,2 · x¹⁵ · 5 · y² · z · 0,8 · y',
-    options: [
-      { id: 'opt-1', label: 'А', text: '0,8x¹⁵y³z, степінь 19', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '0,8x¹⁵y²z, степінь 18', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '8x¹⁵y³z, степінь 19', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '0,8x¹⁵y³z, степінь 15', isCorrect: false }
-    ],
-    explanation: 'Числовий коефіцієнт: 0,2 · 5 · 0,8 = 1 · 0,8 = 0,8.\nЗмінні: x¹⁵ · y² · y · z = x¹⁵y³z.\nСтепінь одночлена: 15 + 3 + 1 = 19.',
-    essence: 'Зведення одночлена до стандартного вигляду.'
-  },
-  {
-    id: 'tarasenkova-4-2',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 4 (2)',
-    baseNumber: 4,
-    partNumber: 2,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Зведіть одночлен до стандартного вигляду та вкажіть його степінь:',
-    expression: '100x³ · y³ · x · y¹⁰ · (-0,12)x⁷ · y⁷ · 5x · 0,2y² · y³ · y⁴',
-    options: [
-      { id: 'opt-1', label: 'А', text: '-12x¹²y²⁹, степінь 41', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '-12x¹¹y²⁸, степінь 39', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '12x¹²y²⁹, степінь 41', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '-1,2x¹²y²⁹, степінь 41', isCorrect: false }
-    ],
-    explanation: 'Коефіцієнт: 100 · (-0,12) · 5 · 0,2 = -12 · 1 = -12.\nСтепінь x: 3 + 1 + 7 + 1 = 12.\nСтепінь y: 3 + 10 + 7 + 2 + 3 + 4 = 29.\nЗагальний степінь: 12 + 29 = 41.',
-    essence: 'Множення одночленів та додавання показників степенів.'
-  },
-
-  // --- № 5. Подайте вираз як многочлен стандартного вигляду ---
-  {
-    id: 'tarasenkova-5-1',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 5 (1)',
-    baseNumber: 5,
-    partNumber: 1,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Подайте вираз як многочлен стандартного вигляду та вкажіть його степінь:',
-    expression: '6x - (x + 4)(4 - x)',
-    options: [
-      { id: 'opt-1', label: 'А', text: 'x² + 6x - 16, степінь 2', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '-x² + 6x + 16, степінь 2', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '6x - 16 - x², степінь 2', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: 'x² - 6x - 16, степінь 2', isCorrect: false }
-    ],
-    explanation: '(x + 4)(4 - x) = (4 + x)(4 - x) = 16 - x².\n6x - (16 - x²) = 6x - 16 + x² = x² + 6x - 16 (степінь 2).',
-    essence: 'Формула різниці квадратів.'
-  },
-  {
-    id: 'tarasenkova-5-2',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 5 (2)',
-    baseNumber: 5,
-    partNumber: 2,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Подайте вираз як многочлен стандартного вигляду та вкажіть його степінь:',
-    expression: '(x + 5)² + 21x',
-    options: [
-      { id: 'opt-1', label: 'А', text: 'x² + 31x + 25, степінь 2', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: 'x² + 10x + 46, степінь 2', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: 'x² + 26x + 25, степінь 2', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: 'x² + 31x + 10, степінь 2', isCorrect: false }
-    ],
-    explanation: '(x + 5)² = x² + 10x + 25.\nx² + 10x + 25 + 21x = x² + 31x + 25 (степінь 2).',
-    essence: 'Квадрат суми двох виразів.'
-  },
-
-  // --- № 6. Розкладіть многочлен на множники ---
-  {
-    id: 'tarasenkova-6-1',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 6 (1)',
-    baseNumber: 6,
-    partNumber: 1,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Розкладіть многочлен на множники:',
-    expression: '3a² - 3b²',
-    options: [
-      { id: 'opt-1', label: 'А', text: '3(a - b)(a + b)', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '(3a - 3b)(a + b)', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '3(a - b)²', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '3(a² + b²)', isCorrect: false }
-    ],
-    explanation: 'Виносимо 3: 3(a² - b²). За формулою різниці квадратів: 3(a - b)(a + b).',
-    essence: 'Винесення спільного множника та різниця квадратів.'
-  },
-  {
-    id: 'tarasenkova-6-2',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 6 (2)',
-    baseNumber: 6,
-    partNumber: 2,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Розкладіть многочлен на множники:',
-    expression: '9x³ - x',
-    options: [
-      { id: 'opt-1', label: 'А', text: 'x(3x - 1)(3x + 1)', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: 'x(9x² - 1)', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '(3x - 1)(3x + 1)', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '9x(x - 1)(x + 1)', isCorrect: false }
-    ],
-    explanation: 'Виносимо x: x(9x² - 1) = x(3x - 1)(3x + 1).',
-    essence: 'Розкладання на множники.'
-  },
-  {
-    id: 'tarasenkova-6-5',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 6 (5)',
-    baseNumber: 6,
-    partNumber: 5,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Розкладіть многочлен на множники:',
-    expression: 'n² + 10n + 25',
-    options: [
-      { id: 'opt-1', label: 'А', text: '(n + 5)²', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '(n - 5)²', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '(n + 25)²', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: 'n(n + 10) + 25', isCorrect: false }
-    ],
-    explanation: 'n² + 2 · 5 · n + 5² = (n + 5)².',
-    essence: 'Квадрат двочлена.'
-  },
-
-  // --- № 7. Доведіть тотожність ---
-  {
-    id: 'tarasenkova-7-1',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 7 (1)',
-    baseNumber: 7,
-    partNumber: 1,
-    category: 'equation',
-    type: 'choice',
-    questionPrompt: 'Спростіть ліву частину та перевірте тотожність 10a - (3a - 9b) = 7a + 9b:',
-    expression: '10a - (3a - 9b)',
-    options: [
-      { id: 'opt-1', label: 'А', text: '7a + 9b (тотожність доведена)', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: '7a - 9b', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: '13a + 9b', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: '7a + 3b', isCorrect: false }
-    ],
-    explanation: '10a - 3a + 9b = 7a + 9b. Ліва частина дорівнює правій, отже, тотожність доведена.',
-    essence: 'Доведення тотожностей.'
-  },
-
-  // --- № 9. Задачі геометричного змісту ---
-  {
-    id: 'tarasenkova-9-1',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 9',
-    baseNumber: 9,
-    partNumber: 1,
-    category: 'task',
-    type: 'choice',
-    questionPrompt: 'Одна сторона прямокутника дорівнює a см, а інша — на 3 см менша. Знайдіть сторону і площу квадрата, периметр якого дорівнює периметру прямокутника:',
-    expression: 'Сторони: a і (a - 3)',
-    options: [
-      { id: 'opt-1', label: 'А', text: 'Сторона: a - 1,5 см; Площа: (a - 1,5)² см²', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: 'Сторона: a - 3 см; Площа: (a - 3)² см²', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: 'Сторона: a - 1,5 см; Площа: a² - 3 см²', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: 'Сторона: 2a - 3 см; Площа: 4a² - 9 см²', isCorrect: false }
-    ],
-    explanation: 'Периметр прямокутника: P = 2(a + a - 3) = 2(2a - 3) = 4a - 6 см.\nСторона квадрата: (4a - 6) / 4 = a - 1,5 см.\nПлоща квадрата: (a - 1,5)² см².',
-    essence: 'Складання алгебраїчних виразів за геометрією.'
-  },
-
-  // --- № 13. Функції ---
-  {
-    id: 'tarasenkova-13-1',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 13',
-    baseNumber: 13,
-    partNumber: 1,
-    category: 'task',
-    type: 'choice',
-    questionPrompt: 'Турист проїхав від бази 15 км автобусом, а потім ішов зі швидкістю 5 км/год. Якою формулою задається відстань y через x годин:',
-    expression: 'y = 15 + 5x',
-    options: [
-      { id: 'opt-1', label: 'А', text: 'y = 15 + 5x', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: 'y = 15x + 5', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: 'y = 5x - 15', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: 'y = 15 / (5x)', isCorrect: false }
-    ],
-    explanation: 'Пішки за x год подолано 5x км. Разом від бази: 15 + 5x км.',
-    essence: 'Лінійна функція як математична модель руху.'
-  },
-
-  // --- № 25. Лінійні рівняння ---
-  {
-    id: 'tarasenkova-25-1',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 25 (1)',
-    baseNumber: 25,
-    partNumber: 1,
-    category: 'equation',
-    type: 'choice',
-    questionPrompt: 'Знайдіть корінь рівняння:',
-    expression: '7 - 3x - 3 = 10 - 4x',
-    options: [
-      { id: 'opt-1', label: 'А', text: 'x = 6', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: 'x = -6', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: 'x = 4', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: 'x = 10', isCorrect: false }
-    ],
-    explanation: '4 - 3x = 10 - 4x;\n-3x + 4x = 10 - 4;\nx = 6.',
-    essence: 'Розв\'язування лінійних рівнянь.'
-  },
-
-  // =========================================================================
-  // РОЗДІЛ 2. Раціональні вирази (§ 1: № 50' - № 84)
-  // =========================================================================
-  {
-    id: 'tarasenkova-50-1',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 50\' (1)',
-    baseNumber: 50,
-    partNumber: 1,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Чи правильно, що вираз 7abc² є цілим:',
-    expression: '7abc²',
-    options: [
-      { id: 'opt-1', label: 'А', text: 'Так, це цілий раціональний вираз', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: 'Ні, це дробовий вираз', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: 'Вираз не є раціональним', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: 'Вираз не має змісту', isCorrect: false }
-    ],
-    explanation: 'Одночлен 7abc² не містить ділення на змінну, тому є цілим.',
-    essence: 'Означення цілого виразу.'
-  },
-  {
-    id: 'tarasenkova-53-4',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 53\' (4)',
-    baseNumber: 53,
-    partNumber: 4,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Чи правильно, що вираз 4 / (6 - x) втрачає зміст, якщо x = 6:',
-    expression: '4 / (6 - x)',
-    options: [
-      { id: 'opt-1', label: 'А', text: 'Так, знаменник перетворюється на 0', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: 'Ні, значення виразу дорівнює 4', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: 'Ні, значення виразу дорівнює 0', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: 'Втрачає зміст тільки при x = 0', isCorrect: false }
-    ],
-    explanation: 'При x = 6 знаменник 6 - 6 = 0. На нуль ділити не можна, тому вираз втрачає зміст.',
-    essence: 'Область допустимих значень (ОДЗ).'
-  },
-  {
-    id: 'tarasenkova-58-1',
-    topicId: 't-1-1',
-    chapterId: 'ch-1',
-    exerciseNumber: '№ 58° (1)',
-    baseNumber: 58,
-    partNumber: 1,
-    category: 'example',
-    type: 'choice',
-    questionPrompt: 'Визначте ОДЗ змінної виразу:',
-    expression: '(2x + 1) / (x - 2)',
-    options: [
-      { id: 'opt-1', label: 'А', text: 'x ≠ 2', isCorrect: true },
-      { id: 'opt-2', label: 'Б', text: 'x ≠ -0,5', isCorrect: false },
-      { id: 'opt-3', label: 'В', text: 'x ≠ 0', isCorrect: false },
-      { id: 'opt-4', label: 'Г', text: 'x — будь-яке число', isCorrect: false }
-    ],
-    explanation: 'Знаменник x - 2 ≠ 0, отже, x ≠ 2.',
-    essence: 'Знаходження ОДЗ дробу.'
-  },
+  ...TARASENKOVA_1_TO_49,
+  ...TARASENKOVA_1_TO_49_ADDITIONS,
+  ...TARASENKOVA_50_TO_88,
+  ...AUTHENTIC_TOPIC_2_2_EXERCISES,
+  ...TARASENKOVA_114_TO_180,
+  ...TARASENKOVA_181_TO_250,
+  ...TARASENKOVA_CHAPTER_3_TASKS,
+  ...TARASENKOVA_CHAPTER_4_TASKS,
+  ...TARASENKOVA_CHAPTER_5_TASKS,
+  ...TARASENKOVA_WORD_PROBLEMS,
 
   // =========================================================================
   // РОЗДІЛ 5. Елементи стохастики. Класична ймовірність (§ 26: № 1036 - № 1065)
@@ -1422,7 +935,10 @@ export const TARASENKOVA_EXERCISES: TextbookExercise[] = [
       { id: 'opt-3', label: 'В', text: '1/5 (або 0,2)', isCorrect: false },
       { id: 'opt-4', label: 'Г', text: '3/20 (або 0,15)', isCorrect: false }
     ],
-    explanation: '1) У кожному ряду є по 3 місця ліворуч і по 3 праворуч від проходу, тобто в одному ряду: 3 + 3 = 6 місць.\n2) Усього в літаку 20 рядів, отже, загальна кількість місць: n = 20 · 6 = 120 місць.\n3) Пасажирові підходить місце в першому або останньому ряду (разом 2 ряди). Кількість таких місць: m = 2 · 6 = 12 місць.\n4) За класичним означенням ймовірності: P(A) = m / n = 12 / 120 = 1 / 10 = 0,1 (або оскільки в кожному ряду однакова кількість місць: 2 / 20 = 1 / 10 = 0,1).',
+    explanation: `1) У кожному ряду є по 3 місця ліворуч і по 3 праворуч від проходу, тобто в одному ряду: 3 + 3 = 6 місць.
+2) Усього в літаку 20 рядів, отже, загальна кількість місць: n = 20 · 6 = 120 місць.
+3) Пасажирові підходить місце в першому або останньому ряду (разом 2 ряди). Кількість таких місць: m = 2 · 6 = 12 місць.
+4) За класичним означенням ймовірності: P(A) = m / n = 12 / 120 = 1 / 10 = 0,1 (або оскільки в кожному ряду однакова кількість місць: 2 / 20 = 1 / 10 = 0,1).`,
     essence: 'Класичне означення ймовірності випадкової події: P(A) = m / n.'
   }
 ];
@@ -1577,13 +1093,13 @@ export function getTextbookExercisesByBookId(
   bookId: 'merzlyak' | 'tarasenkova' | 'ister'
 ): TextbookExercise[] {
   switch (bookId) {
-    case 'merzlyak':
-      return MERZLYAK_EXERCISES;
     case 'tarasenkova':
       return TARASENKOVA_EXERCISES;
+    case 'merzlyak':
+      return MERZLYAK_EXERCISES;
     case 'ister':
       return ISTER_EXERCISES;
     default:
-      return MERZLYAK_EXERCISES;
+      return TARASENKOVA_EXERCISES;
   }
 }

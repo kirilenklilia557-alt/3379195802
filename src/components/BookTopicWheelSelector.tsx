@@ -36,7 +36,7 @@ interface BookTopicWheelSelectorProps {
 export const BookTopicWheelSelector: React.FC<BookTopicWheelSelectorProps> = ({
   selectedChapterId,
   selectedTopicId,
-  selectedBookId = 'merzlyak',
+  selectedBookId = 'tarasenkova',
   onSelectBookId,
   onSelectTopic,
   onProceedToLesson,
